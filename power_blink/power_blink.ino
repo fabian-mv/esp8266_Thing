@@ -19,9 +19,9 @@
 #include <Ultrasonic.h>
 
 /* Valores de las redes inalámbrica y del servidor. */
-const char* ssid = "placeholder_of_security_information";
-const char* password = "placeholder_of_security_information";
-const char* mqtt_server = "placeholder_of_security_information";
+const char* ssid = "placeholder_of_secret_information";
+const char* password = "placeholder_of_secret_information";
+const char* mqtt_server = "placeholder_of_secret_information";
 
 /* Instancia la bilbioteca de wifi y declara variables para leer mensajes de mqtt */
 WiFiClient espClient;
@@ -46,7 +46,7 @@ void setup() {
   Serial.println("Starting");
   setup_wifi(); //Inicia conexion con wifi
 
-  client.setServer(mqtt_server, placeholder_of_security_information); //Función para conectarse con el servidor MQTT (direccion , puerto)
+  client.setServer(mqtt_server, placeholder_of_secret_information); //Función para conectarse con el servidor MQTT (direccion , puerto)
   client.setCallback(callback); //Función para escuchar publicaciones del servidor
 }
 
@@ -103,10 +103,10 @@ void reconnect() {
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");
       // Si se conecta publica un mensaje
-      client.publish("placeholder_of_security_information" , "RING AND OPEN CONNECTED (ESP8266-ABAJO)");
+      client.publish("placeholder_of_secret_information" , "RING AND OPEN CONNECTED (ESP8266-ABAJO)");
       // Y se subscribe a los topics relevantes a el
-      client.subscribe("placeholder_of_security_information");
-      client.subscribe("placeholder_of_security_information");
+      client.subscribe("placeholder_of_secret_information");
+      client.subscribe("placeholder_of_secret_information");
       
     } else {
       Serial.print("failed, rc=");
@@ -121,7 +121,7 @@ void reconnect() {
 void onMessage(String pMessage){
 
 
-  if(pMessage == "placeholder_of_security_information"){
+  if(pMessage == "placeholder_of_secret_information"){
     ultrasonicListen = true;
 
     while(ultrasonicListen){
@@ -131,7 +131,7 @@ void onMessage(String pMessage){
         Serial.println(distancia);
 
         if(distancia < 20){
-          client.publish("placeholder_of_security_information" , "placeholder_of_security_information");
+          client.publish("placeholder_of_secret_information" , "placeholder_of_secret_information");
           Serial.println("MENSAJE PARA QUE ABRA ENVIADO");
 
           ultrasonicListen = false;
