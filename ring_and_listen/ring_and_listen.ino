@@ -128,10 +128,9 @@ int distancia;
 
 Ultrasonic ultrasonic(12, 13); // Inicializa los pines del sensor ultrasonico (Trig PIN,Echo PIN)
 
-/* Variables para el timbre */
-bool ultrasonicListen = false;
-
 String message = "";
+
+bool ringing = false;
 
 void setup() {
   
@@ -219,25 +218,13 @@ void onMessage(String pMessage){
 
 
   if(pMessage == "100"){
-    ultrasonicListen = true;
-    ring_and_listen(1);
-  }
 
+    ringing = true;
 
-  while(ultrasonicListen){
-      client.loop();
-
-      distancia = ultrasonic.Ranging(CM);
-      Serial.println(distancia);
-
-      if(distancia < 20){
-        client.publish("imaginexyz/iotserver/dwarf/entrance_execute" , "111");
-        Serial.println("MENSAJE PARA QUE ABRA ENVIADO");
-
-        ultrasonicListen = false;
-
-
-      }
+    while(ringing){
+        ring_and_listen(1);
+    }  
+    
   }
   
 }
@@ -367,7 +354,9 @@ void ring_and_listen(int s) {
         client.publish("imaginexyz/iotserver/dwarf/entrance_execute" , "111");
         Serial.println("MENSAJE PARA QUE ABRA ENVIADO");
 
-        ultrasonicListen = false;
+        ringing = false;
+
+        thisNote = size;
 
 
       }
@@ -404,7 +393,9 @@ void ring_and_listen(int s) {
         client.publish("imaginexyz/iotserver/dwarf/entrance_execute" , "111");
         Serial.println("MENSAJE PARA QUE ABRA ENVIADO");
 
-        ultrasonicListen = false;
+        ringing = false;
+
+        thisNote = size;
 
 
       }
